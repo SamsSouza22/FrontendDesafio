@@ -34,7 +34,7 @@ const Register = () => {
       <Stack pt={6}>
         <Text align={"center"}>
           Já tem um cadastro?{" "}
-            <ChakraLink as={Link} to="/login" color={"blue.400"}>Login</ChakraLink>
+            <ChakraLink as={Link} to="/auth/login" color={"blue.400"}>Login</ChakraLink>
         </Text>
       </Stack>
     </AuthLayout>
