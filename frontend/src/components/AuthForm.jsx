@@ -65,5 +65,6 @@ const AuthForm = ({ showNameField, form, onChange }) => {
     }).isRequired,
     onChange: PropTypes.func.isRequired
   };
+  
   export default AuthForm;
   
