@@ -1,10 +1,10 @@
-import { createRoot } from 'react-dom/client'
-import AppRoutes from './routes.jsx';
+import { createRoot } from "react-dom/client";
+import AppRoutes from "./routes.jsx";
 
-import {ChakraProvider} from '@chakra-ui/react';
+import { ChakraProvider } from "@chakra-ui/react";
 
-createRoot(document.getElementById('root')).render(
-    <ChakraProvider>
-        <AppRoutes />
-    </ChakraProvider>
+createRoot(document.getElementById("root")).render(
+  <ChakraProvider>
+    <AppRoutes />
+  </ChakraProvider>
 );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Input,
@@ -6,26 +6,16 @@ import {
   FormLabel,
   InputGroup,
   InputRightElement,
-  HStack,
   Button,
   Stack,
   useColorModeValue
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import PropTypes from 'prop-types';
 
-const AuthForm = ({ showNameField }) => {
+const AuthForm = ({ showNameField, form, onChange }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
 
-
-  const onChange = (e) => {
-    setForm({
-      ...form, [e.target.name]: e.target.value
-    });
     return (
       <Box
         rounded={'lg'}
@@ -64,6 +54,16 @@ const AuthForm = ({ showNameField }) => {
         </Stack>
       </Box>
     );
-  }
+  };
 
+  AuthForm.propTypes = {
+    showNameField: PropTypes.bool,
+    form: PropTypes.shape({
+      name: PropTypes.string,
+      email: PropTypes.string,
+      password: PropTypes.string
+    }).isRequired,
+    onChange: PropTypes.func.isRequired
+  };
   export default AuthForm;
+  
