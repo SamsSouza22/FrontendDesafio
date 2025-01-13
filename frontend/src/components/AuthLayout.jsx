@@ -1,5 +1,4 @@
 import { Flex, Stack, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
 import PropTypes from 'prop-types';
 
 const AuthLayout = ({ children }) => {
