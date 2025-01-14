@@ -2,8 +2,8 @@ import { Stack, Button, Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AuthLayout from "../../components/AuthLayout";
-import AuthForm from "../../components/AuthForm";
+import AuthLayout from "../../components/authComponents/AuthLayout";
+import AuthForm from "../../components/authComponents/AuthForm";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -17,8 +17,9 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:5555/login", form);
-      const { token } = response.data;
+      const { token, user } = response.data;
       localStorage.setItem("jwtToken", token);
+      localStorage.setItem("userId", user.id)
       navigate("/");
     } catch (error) {
       console.error(error);
