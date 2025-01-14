@@ -1,4 +1,5 @@
 import {
+    Button,
     Box,
     Input,
     FormControl,
@@ -28,12 +29,12 @@ const PostForm = ({ form, onChange, onSubmit }) => {
                     <Box>
                         <FormControl id="title" isRequired>
                             <FormLabel>Título</FormLabel>
-                            <Input value={form.title} name="name" onChange={onChange} type="text" />
+                            <Input value={form.title} name="title" onChange={onChange} type="text" />
                         </FormControl>
                     </Box>
                     <FormControl id="content" isRequired>
                         <FormLabel>Conteúdo</FormLabel>
-                        <Input value={form.content} name="email" onChange={onChange} type="text" />
+                        <Input value={form.content} name="content" onChange={onChange} type="text" />
                     </FormControl>
                     <Stack spacing={10} pt={2}>
                         <Button
