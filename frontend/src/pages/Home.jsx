@@ -1,9 +1,10 @@
-import { Button, Flex, useDisclosure } from "@chakra-ui/react";
+import { Button, Flex, useDisclosure, useToast, Spinner } from "@chakra-ui/react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import PostList from "../components/postsComponents/PostList.jsx";
 import PostModal from "../components/postsComponents/PostModal.jsx";
 import Pagination from "../components/postsComponents/Pagination.jsx";
+import { errorHandler } from "../utils/errorHandler.mjs";
 
 const Home = () => {
     const [form, setForm] = useState({ title: "", content: "" });
@@ -14,6 +15,8 @@ const Home = () => {
     const [currentPostId, setCurrentPostId] = useState(null);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const userId = localStorage.getItem("userId");
+    const toast = useToast();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -34,7 +37,7 @@ const Home = () => {
     }, [page]);
 
     const onSubmit = async (e) => { 
-        e.preventDefault();
+        setLoading(true);
         try {
             if(isEditing) {
                 await axios.put(`http://localhost:5555/posts/${currentPostId}`, form, {
@@ -50,7 +53,6 @@ const Home = () => {
                 });
             }
             onClose();
-            //atualizar posts
             const response = await axios.get(`http://localhost:5555/posts`, {
                 params: {
                     page,
@@ -60,7 +62,16 @@ const Home = () => {
             setPosts(response.data.posts);
             setTotalPages(response.data.totalPages);
         } catch (error) {
-            console.log(error);
+            const message = errorHandler(error);
+            toast({
+                title: "Erro",
+                description: message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        } finally {
+            setLoading(false);
         }
     };
     
@@ -82,6 +93,7 @@ const Home = () => {
     };
     
     const handleDelete = async (postId) => {
+        setLoading(true);
         try {
             const post = posts.find((post) => post.id === postId);
             if(post.authorid !== userId){
@@ -102,7 +114,16 @@ const Home = () => {
             setPosts(response.data.posts);
             setTotalPages(response.data.totalPages);
         } catch (error) {
-            console.log(error);
+            const message = errorHandler(error);
+            toast({
+                title: "Erro",
+                description: message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -126,13 +147,19 @@ const Home = () => {
             <Button onClick={handleCreate} colorScheme="blue" mb={4}>
                 Novo Post
             </Button>
-            <PostList posts={posts} onEdit={handleEdit} onDelete={handleDelete} />
-            <Pagination
-                page={page}
-                totalPages={totalPages}
-                onPrevious={handlePrevious}
-                onNext={handleNext}
-            />
+            {loading ? (
+                <Spinner size="xl" />
+            ) : (
+                <>
+                    <PostList posts={posts} onEdit={handleEdit} onDelete={handleDelete} />
+                    <Pagination
+                        page={page}
+                        totalPages={totalPages}
+                        onPrevious={handlePrevious}
+                        onNext={handleNext}
+                    />
+                </>
+            )}
             <PostModal
                 isOpen={isOpen}
                 onClose={onClose}

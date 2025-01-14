@@ -4,29 +4,35 @@ import {
   Heading,
   Text,
   Link as ChakraLink,
+  useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../../components/authComponents/AuthLayout";
 import AuthForm from "../../components/authComponents/AuthForm";
 import axios from 'axios';
+import {errorHandler} from '../../utils/errorHandler.mjs';
 
 const Register = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const toast = useToast();
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:5555/register", form);
-      console.log(response);
-      navigate('/auth/login');
+      const response = await axios.post("http://localhost:5555/register", data);
+      const { token, user } = response.data;
+      localStorage.setItem("jwtToken", token);
+      localStorage.setItem("userId", user.id); // Save the user ID in local storage
+      navigate("/");
     } catch (error) {
-      console.error(error);
+      const message = errorHandler(error);
+      toast({
+        title: "Erro",
+        description: message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -37,23 +43,7 @@ const Register = () => {
           Resgistre-se em nossa plataforma
         </Heading>
       </Stack>
-      <form onSubmit={handleSubmit}>
-        <AuthForm showNameField={true} form={form} onChange={handleChange} />
-        <Stack spacing={10} pt={2}>
-          <Button
-            type="submit"
-            loadingText="Submitting"
-            size="lg"
-            bg={"blue.400"}
-            color={"white"}
-            _hover={{
-              bg: "blue.500",
-            }}
-          >
-            Registrar-se
-          </Button>
-        </Stack>
-      </form>
+        <AuthForm showNameField={true} onSubmit={handleSubmit} />
       <Stack pt={6}>
         <Text align={"center"}>
           Já tem um cadastro?{" "}
