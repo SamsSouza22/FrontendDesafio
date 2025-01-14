@@ -3,7 +3,6 @@ import Home from './pages/Home.jsx';
 import Register from './pages/auth/Register.jsx';
 import Login from './pages/auth/Login.jsx';
 import NavBar from './components/NavBar.jsx';
-import PostForm from './components/PostForm.jsx';
 
 const AppRoutes = () => (
     <BrowserRouter>
@@ -21,7 +20,6 @@ const AppRoutes = () => (
                     <Route element={<Register />} path='register' />
                     <Route element={<Login />} path='login' />
                 </Route>
-                <Route element={<PostForm />} path='post'/> 
             </Route>
         </Routes>
     </BrowserRouter>

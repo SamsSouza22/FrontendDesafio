@@ -2,8 +2,8 @@ import { Stack, Button, Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AuthLayout from "../../components/AuthLayout";
-import AuthForm from "../../components/AuthForm";
+import AuthLayout from "../../components/authComponents/AuthLayout";
+import AuthForm from "../../components/authComponents/AuthForm";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });

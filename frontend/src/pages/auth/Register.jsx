@@ -7,8 +7,8 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AuthLayout from "../../components/AuthLayout";
-import AuthForm from "../../components/AuthForm";
+import AuthLayout from "../../components/authComponents/AuthLayout";
+import AuthForm from "../../components/authComponents/AuthForm";
 import axios from 'axios';
 
 const Register = () => {
