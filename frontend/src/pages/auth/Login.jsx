@@ -17,8 +17,9 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:5555/login", form);
-      const { token } = response.data;
+      const { token, user } = response.data;
       localStorage.setItem("jwtToken", token);
+      localStorage.setItem("userId", user.id)
       navigate("/");
     } catch (error) {
       console.error(error);

@@ -13,6 +13,7 @@ const Home = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [currentPostId, setCurrentPostId] = useState(null);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const userId = localStorage.getItem("userId");
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -70,12 +71,40 @@ const Home = () => {
     };
 
     const handleEdit = (post) => { 
+        if(post.authorid !== userId){
+            alert("Você não tem permissão para editar esse post");
+            return;
+        }
         setForm({ title: post.title, content: post.content });
         setCurrentPostId(post.id);
         setIsEditing(true);
         onOpen();
     };
     
+    const handleDelete = async (postId) => {
+        try {
+            const post = posts.find((post) => post.id === postId);
+            if(post.authorid !== userId){
+                alert("Você não tem permissão para deletar esse post");
+                return;
+            }
+            await axios.delete(`http://localhost:5555/posts/${postId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+                },
+            });
+            const response = await axios.get(`http://localhost:5555/posts`, {
+                params: {
+                    page,
+                    perPage: 2,
+                },
+            });
+            setPosts(response.data.posts);
+            setTotalPages(response.data.totalPages);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const onChange = (e) => { 
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -97,7 +126,7 @@ const Home = () => {
             <Button onClick={handleCreate} colorScheme="blue" mb={4}>
                 Novo Post
             </Button>
-            <PostList posts={posts} onEdit={handleEdit} />
+            <PostList posts={posts} onEdit={handleEdit} onDelete={handleDelete} />
             <Pagination
                 page={page}
                 totalPages={totalPages}
