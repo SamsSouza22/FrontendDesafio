@@ -1,69 +1,58 @@
 import {
-    Button,
-    Box,
-    Input,
-    FormControl,
-    FormLabel,
-    Stack,
-    useColorModeValue,
-    Flex
-} from '@chakra-ui/react';
-import PropTypes from 'prop-types';
+  Box,
+  Input,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Stack,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { postSchema } from "../../utils/schemas.mjs";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import PropTypes from "prop-types";
 
-const PostForm = ({ form, onChange, onSubmit }) => {
-    return (
-        <Flex
-            minH={'100vh'}
-            align={'center'}
-            justify={'center'}
-            bg={useColorModeValue('#ffe5d9', 'gray.800')}>
-            <Box
-                rounded={'lg'}
-                width={'100%'}
-                height={'100%'}
-                border={'2px solid'}
-                bg={useColorModeValue('#F8EDEB', 'gray.700')}
-                boxShadow={'lg'}
-                p={8}>
-                <Stack spacing={4}>
-                    <Box>
-                        <FormControl id="title" isRequired>
-                            <FormLabel>Título</FormLabel>
-                            <Input value={form.title} name="title" onChange={onChange} type="text" />
-                        </FormControl>
-                    </Box>
-                    <FormControl id="content" isRequired>
-                        <FormLabel>Conteúdo</FormLabel>
-                        <Input value={form.content} name="content" onChange={onChange} type="text" />
-                    </FormControl>
-                    <Stack spacing={10} pt={2}>
-                        <Button
-                            type="submit"
-                            loadingText="Submitting"
-                            size="lg"
-                            bg={"blue.400"}
-                            color={"white"}
-                            _hover={{
-                                bg: "blue.500",
-                            }}
-                            onClick={onSubmit}
-                        >
-                            Submit
-                        </Button>
-                    </Stack>
-                </Stack>
-            </Box>
-        </Flex>
-    );
-}
+const PostForm = ({ onSubmit }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(postSchema),
+  });
+
+  return (
+    <Box
+      rounded={"lg"}
+      width={"100%"}
+      height={"100%"}
+      border={"2px solid"}
+      bg={useColorModeValue("#F8EDEB", "gray.700")}
+      boxShadow={"lg"}
+      p={8}
+    >
+      <form id="post-form" onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={4}>
+          <Box>
+            <FormControl id="title" isInvalid={errors.title} isRequired>
+              <FormLabel>Título</FormLabel>
+              <Input {...register("title")} type="text" />
+              <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+            </FormControl>
+          </Box>
+          <FormControl id="content" isInvalid={errors.content} isRequired>
+            <FormLabel>Conteúdo</FormLabel>
+            <Input {...register("content")} type="text" />
+            <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
+          </FormControl>
+        </Stack>
+      </form>
+    </Box>
+  );
+};
 
 PostForm.propTypes = {
-    form: PropTypes.shape({
-        title: PropTypes.string,
-        content: PropTypes.string,
-    }).isRequired,
-    onChange: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default PostForm;

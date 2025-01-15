@@ -1,28 +1,35 @@
-import { Stack, Button, Heading } from "@chakra-ui/react";
+import { Stack, Heading, useToast, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthLayout from "../../components/authComponents/AuthLayout";
 import AuthForm from "../../components/authComponents/AuthForm";
+import { errorHandler } from "../../utils/errorHandler.mjs";
 
 const Login = () => {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const toast = useToast();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:5555/login", form);
+      setLoading(true);
+      const response = await axios.post("http://localhost:5555/login", data);
       const { token, user } = response.data;
       localStorage.setItem("jwtToken", token);
-      localStorage.setItem("userId", user.id)
+      localStorage.setItem("userId", user.id);
       navigate("/");
     } catch (error) {
-      console.error(error);
+      const message = errorHandler(error);
+      toast({
+        title: "Erro",
+        description: message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -32,23 +39,11 @@ const Login = () => {
           Realize seu Login
         </Heading>
       </Stack>
-      <form onSubmit={handleSubmit}>
-        <AuthForm showNameField={false} form={form} onChange={handleChange}/>
-        <Stack spacing={10} pt={2}>
-          <Button
-            type="submit"
-            loadingText="Submitting"
-            size="lg"
-            bg={"blue.400"}
-            color={"white"}
-            _hover={{
-              bg: "blue.500",
-            }}
-          >
-            Entrar
-          </Button>
-        </Stack>
-      </form>
+      {loading ? (
+        <Spinner size="xl" />
+      ) : (
+        <AuthForm showNameField={false} onSubmit={handleSubmit} />
+      )}
     </AuthLayout>
   );
 };
