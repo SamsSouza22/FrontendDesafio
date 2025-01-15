@@ -12,7 +12,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PropTypes from "prop-types";
@@ -39,65 +38,67 @@ const AuthForm = ({ showNameField, onSubmit }) => {
       boxShadow={"lg"}
       p={8}
     >
-      <Stack spacing={4}>
-        {showNameField && (
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={4}>
+          {showNameField && (
+            <Box>
+              <FormControl id="firstName" isInvalid={errors.name} isRequired>
+                <FormLabel>Nome</FormLabel>
+                <Input {...register("name")} type="text" />
+                <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
+              </FormControl>
+            </Box>
+          )}
           <Box>
-            <FormControl id="firstName" isInvalid={errors.name} isRequired>
-              <FormLabel>Nome</FormLabel>
-              <Input {...register("name")} type="text" />
-              <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
+            <FormControl id="email" isInvalid={errors.email} isRequired>
+              <FormLabel>Email</FormLabel>
+              <Input {...register("email")} type="email" />
+              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
             </FormControl>
           </Box>
-        )}
-        <Box>
-          <FormControl id="email" isInvalid={errors.email} isRequired>
-            <FormLabel>Email</FormLabel>
-            <Input {...register("email")} type="email" />
-            <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
-          </FormControl>
-        </Box>
-        <Box>
-          <FormControl id="password" isInvalid={errors.password} isRequired>
-            <FormLabel>Senha</FormLabel>
-            <InputGroup>
-              <Input
-                {...register("password")}
-                type={showPassword ? "text" : "password"}
-              />
-              <InputRightElement h={"full"}>
-                <Button
-                  variant={"ghost"}
-                  onClick={() => setShowPassword((show) => !show)}
-                >
-                  {showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
-          </FormControl>
-        </Box>
-        <Stack spacing={10} pt={2}>
-          <Button
-            type="submit"
-            loadingText="Submitting"
-            size="lg"
-            bg={"blue.400"}
-            color={"white"}
-            _hover={{
-              bg: "blue.500",
-            }}
-            onClick={handleSubmit(onSubmit)}
-          >
-            Submit
-          </Button>
+          <Box>
+            <FormControl id="password" isInvalid={errors.password} isRequired>
+              <FormLabel>Senha</FormLabel>
+              <InputGroup>
+                <Input
+                  {...register("password")}
+                  type={showPassword ? "text" : "password"}
+                />
+                <InputRightElement h={"full"}>
+                  <Button
+                    variant={"ghost"}
+                    onClick={() => setShowPassword((show) => !show)}
+                  >
+                    {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+            </FormControl>
+          </Box>
+          <Stack spacing={10} pt={2}>
+            <Button
+              type="submit"
+              loadingText="Submitting"
+              size="lg"
+              bg={"blue.400"}
+              color={"white"}
+              _hover={{
+                bg: "blue.500",
+              }}
+            >
+              Submit
+            </Button>
+          </Stack>
         </Stack>
-      </Stack>
+      </form>
     </Box>
   );
 };
 
 AuthForm.propTypes = {
   showNameField: PropTypes.bool,
-  onSubmit: PropTypes.func.isRequired,};
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default AuthForm;
