@@ -3,11 +3,13 @@ import { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+    const [userId, setUserId] = useState(!!localStorage.getItem('userId'))
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('jwtToken'));
 
     useEffect(() => {
         const handleStorage = () => {
             setIsLoggedIn(!!localStorage.getItem('jwtToken'))
+            setUserId(!!localStorage.getItem('userId'))
         };
         window.addEventListener('storage', handleStorage);
 
@@ -20,16 +22,18 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('jwtToken', token);
         localStorage.setItem('userId', id);
         setIsLoggedIn(true);
+        setUserId(id);
     };
 
     const logout = () => {
         localStorage.removeItem('jwtToken');
         localStorage.removeItem('userId');
         setIsLoggedIn(false);
+        setUserId(null)
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, userId, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
