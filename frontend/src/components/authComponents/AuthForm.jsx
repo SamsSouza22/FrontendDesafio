@@ -42,7 +42,7 @@ const AuthForm = ({ showNameField, onSubmit }) => {
         <Stack spacing={4}>
           {showNameField && (
             <Box>
-              <FormControl id="firstName" isInvalid={errors.name} isRequired>
+              <FormControl id="firstName" isInvalid={errors.name} noValidate>
                 <FormLabel>Nome</FormLabel>
                 <Input {...register("name")} type="text" />
                 <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
@@ -50,14 +50,14 @@ const AuthForm = ({ showNameField, onSubmit }) => {
             </Box>
           )}
           <Box>
-            <FormControl id="email" isInvalid={errors.email} isRequired>
+            <FormControl id="email" isInvalid={errors.email} noValidate>
               <FormLabel>Email</FormLabel>
               <Input {...register("email")} type="email" />
               <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
             </FormControl>
           </Box>
           <Box>
-            <FormControl id="password" isInvalid={errors.password} isRequired>
+            <FormControl id="password" isInvalid={errors.password} noValidate>
               <FormLabel>Senha</FormLabel>
               <InputGroup>
                 <Input

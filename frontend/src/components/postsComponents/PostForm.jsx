@@ -45,13 +45,13 @@ const PostForm = ({ onSubmit, initialValues }) => {
       <form id="post-form" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>
           <Box>
-            <FormControl id="title" isInvalid={errors.title} isRequired>
+            <FormControl id="title" isInvalid={errors.title} noValidate>
               <FormLabel>Título</FormLabel>
               <Input {...register("title")} type="text" />
               <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
             </FormControl>
           </Box>
-          <FormControl id="content" isInvalid={errors.content} isRequired>
+          <FormControl id="content" isInvalid={errors.content} noValidate>
             <FormLabel>Conteúdo</FormLabel>
             <Input {...register("content")} type="text" />
             <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
