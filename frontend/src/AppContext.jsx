@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [userId, setUserId] = useState(!!localStorage.getItem('userId'))
+    const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('jwtToken'));
 
     useEffect(() => {

@@ -8,19 +8,30 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { postSchema } from "../../utils/schemas.mjs";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PropTypes from "prop-types";
 
-const PostForm = ({ onSubmit }) => {
+const PostForm = ({ onSubmit, initialValues }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue, // Allows setting initial values
   } = useForm({
     resolver: zodResolver(postSchema),
+    defaultValues: initialValues || {}, // Default to empty object if no initialValues
   });
 
+  useEffect(() => {
+    if (initialValues) {
+      Object.keys(initialValues).forEach((key) =>
+        setValue(key, initialValues[key])
+      );
+    }
+  }, [initialValues, setValue]);
+  
   return (
     <Box
       rounded={"lg"}
@@ -53,6 +64,10 @@ const PostForm = ({ onSubmit }) => {
 
 PostForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({
+    title: PropTypes.string,
+    content: PropTypes.string,
+  }),
 };
 
 export default PostForm;

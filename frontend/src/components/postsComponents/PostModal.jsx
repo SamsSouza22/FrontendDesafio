@@ -11,7 +11,7 @@ import {
 import PostForm from "./PostForm.jsx";
 import PropTypes from "prop-types";
 
-const PostModal = ({ isOpen, onClose, onSubmit, title }) => {
+const PostModal = ({ isOpen, onClose, onSubmit, title, post }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -19,7 +19,7 @@ const PostModal = ({ isOpen, onClose, onSubmit, title }) => {
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <PostForm onSubmit={onSubmit} />
+          <PostForm onSubmit={onSubmit} initialValues={post}/>
         </ModalBody>
         <ModalFooter>
           <Button type="submit" colorScheme="blue" form="post-form" mr={3}>
@@ -39,6 +39,10 @@ PostModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  post: PropTypes.shape({
+    title: PropTypes.string,
+    content: PropTypes.string,
+  }),
 };
 
 export default PostModal;
