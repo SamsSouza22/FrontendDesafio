@@ -5,6 +5,7 @@ import {
   Stack,
   Text,
   Heading,
+  HStack,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { useContext } from "react";
@@ -13,7 +14,7 @@ import { AuthContext } from "../../AppContext.jsx";
 const PostList = ({ posts, onEdit, onDelete }) => {
   const { userId } = useContext(AuthContext);
   return (
-    <Stack spacing={4} width={"100%"} p={4} bg={"#F8EDEB"} borderRadius={"lg"}>
+    <Stack spacing={4} width={"2xl"} p={4} bg={"#F8EDEB"} borderRadius={"lg"} >
       {posts && posts.length > 0 ? (
         posts.map((post) => (
           <Center py={6} key={post.id}>
@@ -26,15 +27,32 @@ const PostList = ({ posts, onEdit, onDelete }) => {
               overflow={"hidden"}
             >
               <Stack>
+                <HStack spacing={"8"} direction={'row'}>
                 <Text
                   color={"green.500"}
                   textTransform={"uppercase"}
-                  fontWeight={800}
+                  fontWeight={"bold"}
                   fontSize={"sm"}
                   letterSpacing={1.1}
                 >
                   {post.author.name}
                 </Text>
+                {post.authorid === userId && (
+                    <Box mt={4}>
+                      <Button colorScheme="blue" onClick={() => onEdit(post)} size={"sm"}>
+                        Edit
+                      </Button>
+                      <Button
+                        colorScheme="red"
+                        onClick={() => onDelete(post.id)}
+                        ml={2}
+                        size={"sm"}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
+                  )}
+                </HStack>
                 <Heading fontSize={"2xl"} fontFamily={"body"}>
                   {post.title}
                 </Heading>
@@ -48,20 +66,6 @@ const PostList = ({ posts, onEdit, onDelete }) => {
                   <Text color={"gray.500"}>
                     Updated at: {new Date(post.updatedAt).toLocaleString()}
                   </Text>
-                  {post.authorid === userId && (
-                    <Box mt={4}>
-                      <Button colorScheme="blue" onClick={() => onEdit(post)}>
-                        Edit
-                      </Button>
-                      <Button
-                        colorScheme="red"
-                        onClick={() => onDelete(post.id)}
-                        ml={2}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
-                  )}
                 </Stack>
               </Stack>
             </Box>
