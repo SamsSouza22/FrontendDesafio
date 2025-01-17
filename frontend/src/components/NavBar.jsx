@@ -1,10 +1,10 @@
-import { Flex, Heading, HStack, Link, Button } from "@chakra-ui/react";
+import { Flex, Heading, HStack, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../AppContext";
 
 const NavBar = () => {
-  const {isLoggedIn, logout} = useContext(AuthContext)
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <Flex
@@ -21,15 +21,9 @@ const NavBar = () => {
     >
       <HStack spacing="30px">
         <Heading as="h2" size="md" color="black">
-          <Link
-            as={RouterLink}
-            to="/"
-            _hover={{ textDecoration: "none", color: "gray.600" }}
-            fontWeight={500}
-            transition="color 0.2s"
-          >
+          <Button as={RouterLink} to="/" colorScheme="blue">
             Home
-          </Link>
+          </Button>
         </Heading>
         {isLoggedIn ? (
           <>
