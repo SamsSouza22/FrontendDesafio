@@ -17,6 +17,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
+  const [currentPost, setCurrentPost] = useState(null);
   const [currentPostId, setCurrentPostId] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userId = localStorage.getItem("userId");
@@ -90,7 +91,8 @@ const Home = () => {
       alert("Você não tem permissão para editar esse post");
       return;
     }
-    setCurrentPostId(post.id);
+    setCurrentPostId(post.id)
+    setCurrentPost(post);
     setIsEditing(true);
     onOpen();
   };
@@ -171,6 +173,7 @@ const Home = () => {
         onClose={onClose}
         onSubmit={onSubmit}
         title={isEditing ? "Edit Post" : "Create Post"}
+        post={currentPost}
       />
     </Flex>
   );

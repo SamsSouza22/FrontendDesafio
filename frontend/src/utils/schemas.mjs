@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 const loginSchema = z.object({
-    email: z.string().email('Invalid email address').nonempty('Email is required'),
-    password: z.string().min(6, 'Password must be at least 6 characters').nonempty('Password is required'),
+    email: z.string().nonempty('Email is required').email('Inform a valid email address'),
+    password: z.string().nonempty('Password is required').min(6, 'Password must be at least 6 characters'),
   });
 
 const postSchema = z.object({
@@ -15,8 +15,8 @@ const postSchema = z.object({
 
   const registerSchema = z.object({
     name: z.string().min(1, 'Name is required'),
-    email: z.string().email('Invalid email address').nonempty('Email is required'),
-    password: z.string().min(6, 'Password must be at least 6 characters').nonempty('Password is required'),
+    email: z.string().nonempty('Email is required').email('Invalid email address'),
+    password: z.string().nonempty('Password is required').min(6, 'Password must be at least 6 characters'),
   });
 
 export { loginSchema, postSchema, registerSchema };

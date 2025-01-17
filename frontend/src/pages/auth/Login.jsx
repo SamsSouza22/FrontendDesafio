@@ -1,14 +1,16 @@
 import { Stack, Heading, useToast, Spinner } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthLayout from "../../components/authComponents/AuthLayout";
 import AuthForm from "../../components/authComponents/AuthForm";
 import { errorHandler } from "../../utils/errorHandler.mjs";
+import { AuthContext } from "../../AppContext";
 
 const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (data) => {
@@ -16,8 +18,7 @@ const Login = () => {
       setLoading(true);
       const response = await axios.post("http://localhost:5555/login", data);
       const { token, user } = response.data;
-      localStorage.setItem("jwtToken", token);
-      localStorage.setItem("userId", user.id);
+      login(token, user.id);
       navigate("/");
     } catch (error) {
       const message = errorHandler(error);

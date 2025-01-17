@@ -6,7 +6,6 @@ import {
   Link as ChakraLink,
   useToast
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../../components/authComponents/AuthLayout";
 import AuthForm from "../../components/authComponents/AuthForm";

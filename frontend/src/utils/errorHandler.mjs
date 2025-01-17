@@ -1,6 +1,6 @@
 export const errorHandler = (error) => {
     if (error.response) {
-        //casos diferentes de 200 ok e 21 created
+        //casos diferentes de 200 ok e 201 created
         console.log("API error:",error.response.data);
         return error.response.data.error || 'Ocorreu um erro inesperado';
     } else if (error.request) {

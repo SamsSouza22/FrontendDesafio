@@ -1,14 +1,14 @@
-import { Flex, Heading, Spacer, HStack, Link, Button } from "@chakra-ui/react";
+import { Flex, Heading, HStack, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { logout } from "../utils/auth.mjs";
+import { useContext } from "react";
+import { AuthContext } from "../AppContext";
 
 const NavBar = () => {
-  const isLoggedIn = !!localStorage.getItem("jwtToken");
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <Flex
       as="nav"
-      align="center"
       justify="space-between"
       wrap="wrap"
       w="100%"
@@ -21,49 +21,27 @@ const NavBar = () => {
     >
       <HStack spacing="30px">
         <Heading as="h2" size="md" color="black">
-          <Link
-            as={RouterLink}
-            to="/"
-            _hover={{ textDecoration: "none", color: "gray.600" }}
-            fontWeight={500}
-            transition="color 0.2s"
-          >
+          <Button as={RouterLink} to="/" colorScheme="blue">
             Home
-          </Link>
+          </Button>
         </Heading>
-        {!isLoggedIn && (
+        {isLoggedIn ? (
           <>
-            <Heading as="h2" size="md" color="black">
-              <Link
-                as={RouterLink}
-                to="/auth/login"
-                _hover={{ textDecoration: "none", color: "gray.600" }}
-                fontWeight={500}
-                transition="color 0.2s"
-              >
-                Log In
-              </Link>
-            </Heading>
-            <Heading as="h2" size="md" color="black">
-              <Link
-                as={RouterLink}
-                to="/auth/register"
-                _hover={{ textDecoration: "none", color: "gray.600" }}
-                fontWeight={500}
-                transition="color 0.2s"
-              >
-                Register
-              </Link>
-            </Heading>
+            <Button onClick={logout} colorScheme="blue">
+              Logout
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button as={RouterLink} to="/auth/login" colorScheme="blue">
+              Login
+            </Button>
+            <Button as={RouterLink} to="/auth/register" colorScheme="blue">
+              Register
+            </Button>
           </>
         )}
       </HStack>
-      <Spacer />
-      {isLoggedIn && (
-        <Button colorScheme="red" onClick={logout}>
-          Logout
-        </Button>
-      )}
     </Flex>
   );
 };
