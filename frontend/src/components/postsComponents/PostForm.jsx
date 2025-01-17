@@ -18,10 +18,10 @@ const PostForm = ({ onSubmit, initialValues }) => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue, // Allows setting initial values
+    setValue, 
   } = useForm({
     resolver: zodResolver(postSchema),
-    defaultValues: initialValues || {}, // Default to empty object if no initialValues
+    defaultValues: initialValues || {}, 
   });
 
   useEffect(() => {
