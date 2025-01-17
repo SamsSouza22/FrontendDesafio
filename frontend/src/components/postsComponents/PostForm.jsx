@@ -53,7 +53,7 @@ const PostForm = ({ onSubmit, initialValues }) => {
           </Box>
           <FormControl id="content" isInvalid={errors.content} noValidate>
             <FormLabel>Conteúdo</FormLabel>
-            <Input {...register("content")} type="text" />
+            <Input {...register("content")} type="text"/>
             <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
           </FormControl>
         </Stack>

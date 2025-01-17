@@ -10,9 +10,9 @@ import {
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { AuthContext } from "../../AppContext.jsx";
+import PostCard from "./PostCard.jsx";
 
 const PostList = ({ posts, onEdit, onDelete }) => {
-  const { userId } = useContext(AuthContext);
   return (
     <Stack spacing={4} width={"2xl"} p={4} bg={"#F8EDEB"} borderRadius={"lg"} >
       {posts && posts.length > 0 ? (
@@ -26,48 +26,24 @@ const PostList = ({ posts, onEdit, onDelete }) => {
               p={6}
               overflow={"hidden"}
             >
-              <Stack>
-                <HStack spacing={"8"} direction={'row'}>
-                <Text
-                  color={"green.500"}
-                  textTransform={"uppercase"}
-                  fontWeight={"bold"}
-                  fontSize={"sm"}
-                  letterSpacing={1.1}
-                >
-                  {post.author.name}
-                </Text>
-                {post.authorid === userId && (
-                    <Box mt={4}>
-                      <Button colorScheme="blue" onClick={() => onEdit(post)} size={"sm"}>
-                        Edit
-                      </Button>
-                      <Button
-                        colorScheme="red"
-                        onClick={() => onDelete(post.id)}
-                        ml={2}
-                        size={"sm"}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
-                  )}
-                </HStack>
-                <Heading fontSize={"2xl"} fontFamily={"body"}>
-                  {post.title}
-                </Heading>
-                <Text color={"gray.500"}>{post.content}</Text>
-              </Stack>
-              <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-                <Stack direction={"column"} spacing={0} fontSize={"sm"}>
-                  <Text fontWeight={600}>
-                    Created at: {new Date(post.createdAt).toLocaleString()}
-                  </Text>
-                  <Text color={"gray.500"}>
-                    Updated at: {new Date(post.updatedAt).toLocaleString()}
-                  </Text>
-                </Stack>
-              </Stack>
+              <Text
+                color={"green.500"}
+                textTransform={"uppercase"}
+                fontWeight={"bold"}
+                fontSize={"sm"}
+                letterSpacing={1.1}
+              >
+                {post.author.name}
+              </Text>
+              <PostCard
+                key={post.id}
+                post={post}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
+              <Text fontWeight={600} fontSize={"md"}>
+                Created at: {new Date(post.createdAt).toLocaleString()}
+              </Text>
             </Box>
           </Center>
         ))
