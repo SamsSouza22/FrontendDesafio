@@ -11,17 +11,19 @@ import AuthLayout from "../../components/authComponents/AuthLayout";
 import AuthForm from "../../components/authComponents/AuthForm";
 import axios from 'axios';
 import {errorHandler} from '../../utils/errorHandler.mjs';
+import { AuthContext } from "../../AppContext";
+import { useContext } from "react";
 
 const Register = () => {
   const toast = useToast();
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (data) => {
     try {
       const response = await axios.post("http://localhost:5555/register", data);
       const { token, user } = response.data;
-      localStorage.setItem("jwtToken", token);
-      localStorage.setItem("userId", user.id); // Save the user ID in local storage
+      login(token, user.id);
       navigate("/");
     } catch (error) {
       const message = errorHandler(error);
