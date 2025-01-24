@@ -13,6 +13,7 @@ import axios from 'axios';
 import {errorHandler} from '../../utils/errorHandler.mjs';
 import { AuthContext } from "../../AppContext";
 import { useContext } from "react";
+import {VITE_API_URL} from "../../utils/secrets.mjs"
 
 const Register = () => {
   const toast = useToast();
@@ -21,7 +22,7 @@ const Register = () => {
 
   const handleSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:5555/register", data);
+      const response = await axios.post(`${VITE_API_URL}/register`, data);
       const { token, user } = response.data;
       login(token, user.id);
       navigate("/");

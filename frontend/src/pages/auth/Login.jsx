@@ -6,6 +6,7 @@ import AuthLayout from "../../components/authComponents/AuthLayout";
 import AuthForm from "../../components/authComponents/AuthForm";
 import { errorHandler } from "../../utils/errorHandler.mjs";
 import { AuthContext } from "../../AppContext";
+import { VITE_API_URL } from "../../utils/secrets.mjs";
 
 const Login = () => {
   const toast = useToast();
@@ -16,7 +17,7 @@ const Login = () => {
   const handleSubmit = async (data) => {
     try {
       setLoading(true);
-      const response = await axios.post("http://localhost:5555/login", data);
+      const response = await axios.post(`${VITE_API_URL}/login`, data);
       const { token, user } = response.data;
       login(token, user.id);
       navigate("/");

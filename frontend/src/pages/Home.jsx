@@ -11,6 +11,7 @@ import PostList from "../components/postsComponents/PostList.jsx";
 import PostModal from "../components/postsComponents/PostModal.jsx";
 import Pagination from "../components/postsComponents/Pagination.jsx";
 import { errorHandler } from "../utils/errorHandler.mjs";
+import { VITE_API_URL } from "../utils/secrets.mjs"
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -27,7 +28,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(`http://localhost:5555/posts`, {
+        const response = await axios.get(`${VITE_API_URL}/posts`, {
           params: {
             page,
             perPage: 2,
@@ -46,20 +47,20 @@ const Home = () => {
     setLoading(true);
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:5555/posts/${currentPostId}`, data, {
+        await axios.put(`${VITE_API_URL}/posts/${currentPostId}`, data, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
           },
         });
       } else {
-        await axios.post(`http://localhost:5555/posts`, data, {
+        await axios.post(`${VITE_API_URL}/posts`, data, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
           },
         });
       }
       onClose();
-      const response = await axios.get(`http://localhost:5555/posts`, {
+      const response = await axios.get(`${VITE_API_URL}/posts`, {
         params: {
           page,
           perPage: 2,
@@ -105,12 +106,12 @@ const Home = () => {
         alert("Você não tem permissão para deletar esse post");
         return;
       }
-      await axios.delete(`http://localhost:5555/posts/${postId}`, {
+      await axios.delete(`${VITE_API_URL}/posts/${postId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
         },
       });
-      const response = await axios.get(`http://localhost:5555/posts`, {
+      const response = await axios.get(`${VITE_API_URL}/posts`, {
         params: {
           page,
           perPage: 2,
