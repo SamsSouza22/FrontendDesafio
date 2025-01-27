@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import PostList from "../components/postsComponents/PostList.jsx";
 import PostModal from "../components/postsComponents/PostModal.jsx";
 import Pagination from "../components/postsComponents/Pagination.jsx";
+import AIDrawer from "../components/AIDrawer.jsx";
 import { errorHandler } from "../utils/errorHandler.mjs";
 import { VITE_API_URL } from "../utils/secrets.mjs"
 
@@ -156,6 +157,7 @@ const Home = () => {
       <Button onClick={handleCreate} colorScheme="blue" mb={4}>
         Novo Post
       </Button>
+      <AIDrawer />
       {loading ? (
         <Spinner size="xl" />
       ) : (
