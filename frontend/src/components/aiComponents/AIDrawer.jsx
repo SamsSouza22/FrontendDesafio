@@ -10,6 +10,7 @@ import {
   DrawerCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import AIDrawerForm from './AIDrawerForm.jsx';
 
 const AIDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,6 +27,7 @@ const AIDrawer = () => {
           <DrawerHeader>Peça ajuda para se inspirar a escrever um post!
           </DrawerHeader>
           <DrawerBody>
+          <AIDrawerForm onClose={onClose} />
           </DrawerBody>
           <DrawerFooter>
             <Button variant="outline" mr={3} onClick={onClose}>

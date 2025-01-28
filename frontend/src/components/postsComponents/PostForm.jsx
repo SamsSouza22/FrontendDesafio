@@ -6,6 +6,7 @@ import {
   FormErrorMessage,
   Stack,
   useColorModeValue,
+  Textarea
 } from "@chakra-ui/react";
 import { postSchema } from "../../utils/schemas.mjs";
 import { useEffect } from "react";
@@ -53,7 +54,7 @@ const PostForm = ({ onSubmit, initialValues }) => {
           </Box>
           <FormControl id="content" isInvalid={errors.content} noValidate>
             <FormLabel>Conteúdo</FormLabel>
-            <Input {...register("content")} type="text" />
+            <Textarea autoresize {...register('content')}/>
             <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
           </FormControl>
         </Stack>
