@@ -54,7 +54,7 @@ const PostForm = ({ onSubmit, initialValues }) => {
           </Box>
           <FormControl id="content" isInvalid={errors.content} noValidate>
             <FormLabel>Conteúdo</FormLabel>
-            <Textarea autoresize {...register('content')}/>
+            <Textarea {...register('content')}/>
             <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
           </FormControl>
         </Stack>

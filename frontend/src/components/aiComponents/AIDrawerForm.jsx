@@ -50,7 +50,7 @@ const AIDrawerForm = ({ onClose }) => {
       {response && (
         <Box mt={4}>
           <FormLabel>Resposta da IA</FormLabel>
-          <Textarea value={response} autoresize isReadOnly />
+          <Textarea value={response} isReadOnly />
         </Box>
       )}
     </Box>

@@ -2,6 +2,7 @@ import {
     Box,
     Button,
     Text,
+    Textarea,
     Stack,
     Heading,
     Modal,
@@ -76,7 +77,7 @@ const PostCard = ({ post, onEdit, onDelete }) => {
                         <Heading fontSize={"lg"} fontFamily={"body"}>
                             {post.title}
                         </Heading>
-                        <Text color={"gray.500"}>{post.content}</Text>
+                        <Textarea value={post.content} color={"gray.500"} maxH={"15lh"} isReadOnly/>
                     </ModalBody>
                     <ModalFooter>
                         <Stack direction={"column"} spacing={0} fontSize={"sm"}>
