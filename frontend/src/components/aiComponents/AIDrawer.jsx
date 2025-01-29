@@ -17,7 +17,7 @@ const AIDrawer = () => {
 
   return (
     <>
-      <Button variant="outline" size="sm" onClick={onOpen}>
+      <Button colorScheme="blue" mb={4} onClick={onOpen}>
         Converse com a IA!
       </Button>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={"lg"}>

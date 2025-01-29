@@ -1,6 +1,8 @@
 import {
   Button,
   Flex,
+  Grid,
+  GridItem,
   useDisclosure,
   useToast,
   Spinner,
@@ -154,23 +156,31 @@ const Home = () => {
       direction={"column"}
       p={4}
     >
-      <Button onClick={handleCreate} colorScheme="blue" mb={4}>
-        Novo Post
-      </Button>
-      <AIDrawer />
-      {loading ? (
-        <Spinner size="xl" />
-      ) : (
-        <>
-          <PostList posts={posts} onEdit={handleEdit} onDelete={handleDelete} />
-          <Pagination
-            page={page}
-            totalPages={totalPages}
-            onPrevious={handlePrevious}
-            onNext={handleNext}
-          />
-        </>
-      )}
+      <Grid templateColumns="repeat(3, 1fr)" gap={6} width="100%"> 
+        <GridItem align={"center"}>
+          <Button onClick={handleCreate} colorScheme="blue" mb={4}>
+            Novo Post
+          </Button>
+        </GridItem>
+        <GridItem colSpan={1}>
+          {loading ? (
+            <Spinner size="xl" />
+          ) : (
+            <>
+              <PostList posts={posts} onEdit={handleEdit} onDelete={handleDelete} />
+              <Pagination
+                page={page}
+                totalPages={totalPages}
+                onPrevious={handlePrevious}
+                onNext={handleNext}
+              />
+            </>
+          )}
+        </GridItem>
+        <GridItem align={"center"}>
+          <AIDrawer />
+        </GridItem>
+      </Grid>
       <PostModal
         isOpen={isOpen}
         onClose={onClose}
