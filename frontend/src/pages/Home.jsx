@@ -6,6 +6,7 @@ import {
   useDisclosure,
   useToast,
   Spinner,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -27,6 +28,7 @@ const Home = () => {
   const userId = localStorage.getItem("userId");
   const toast = useToast();
   const [loading, setLoading] = useState(false);
+  const columns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -157,13 +159,13 @@ const Home = () => {
       direction={"column"}
       p={4}
     >
-      <Grid templateColumns="repeat(3, 1fr)" gap={6} width="100%"> 
+      <Grid templateColumns={`repeat(${columns}, 1fr)`} gap={6} width="100%" maxW="1200px"> 
         <GridItem align={"center"}>
-          <Button onClick={handleCreate} colorScheme="blue" mb={4}>
+          <Button onClick={handleCreate} colorScheme="blue" mb={4} width={{ base: "100%", md: "auto" }}>
             Novo Post
           </Button>
         </GridItem>
-        <GridItem colSpan={1}>
+        <GridItem colSpan={1} w="100%">
           {loading ? (
             <Spinner size="xl" />
           ) : (

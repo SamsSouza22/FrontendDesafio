@@ -3,18 +3,22 @@ import {
   Center,
   Stack,
   Text,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import PostCard from "./PostCard.jsx";
 
 const PostList = ({ posts, onEdit, onDelete }) => {
+  const width = useBreakpointValue({ base: "100%", md: "2xl" });
+  const boxWidth = useBreakpointValue({ base: "100%", sm: "80%", md: "445px" });
+
   return (
-    <Stack spacing={4} width={"2xl"} p={4} bg={"#F8EDEB"} borderRadius={"lg"} >
+    <Stack spacing={4} width={width} p={4} bg={"#F8EDEB"} borderRadius={"lg"} >
       {posts && posts.length > 0 ? (
         posts.map((post) => (
-          <Center py={6} key={post.id}>
+          <Center py={6} key={post.id} width="100%">
             <Box
-              maxW={"445px"}
+              maxW={boxWidth}
               w={"full"}
               boxShadow={"2xl"}
               rounded={"md"}
