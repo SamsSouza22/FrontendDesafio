@@ -1,15 +1,10 @@
 import {
   Box,
-  Button,
   Center,
   Stack,
   Text,
-  Heading,
-  HStack,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import { useContext } from "react";
-import { AuthContext } from "../../AppContext.jsx";
 import PostCard from "./PostCard.jsx";
 
 const PostList = ({ posts, onEdit, onDelete }) => {

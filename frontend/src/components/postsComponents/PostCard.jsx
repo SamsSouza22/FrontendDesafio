@@ -14,7 +14,6 @@ import {
     ModalFooter,
     useDisclosure,
     HStack,
-    Spacer,
 } from "@chakra-ui/react";
 import PropTypes from 'prop-types';
 import { useContext } from "react";

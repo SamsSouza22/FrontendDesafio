@@ -86,6 +86,7 @@ const Home = () => {
   };
 
   const handleCreate = () => {
+    setCurrentPost(null);
     setIsEditing(false);
     onOpen();
   };
